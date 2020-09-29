@@ -9,6 +9,17 @@ import {
   currentProviderLoaded,
 } from "./actions/web3Slice";
 import { getAccount } from "./helpers";
+import { apiCallBegan } from "./store/api";
+
+/// API Interactions ////////////
+export const loadApi = (dispatch) => {
+  dispatch(
+    apiCallBegan({
+      url: "/bugs",
+      onSuccess: "api/apiReceived",
+    })
+  );
+};
 
 ////// Web3 Interactions /////////
 

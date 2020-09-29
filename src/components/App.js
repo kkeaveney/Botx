@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NavBarList from "../containers/NavBarList";
 import Content from "./Content";
-
 import "./App.css";
-
-import { loadToken } from "../interactions";
+import { loadToken, loadApi } from "../interactions";
 import {
   loadWeb3,
   loadAccount,
@@ -15,7 +13,12 @@ import {
 
 class App extends Component {
   componentWillMount() {
+    this.loadApiData(this.props.dispatch);
     this.loadBlockchainData(this.props.dispatch);
+  }
+
+  async loadApiData(dispatch) {
+    loadApi(dispatch);
   }
 
   async loadBlockchainData(dispatch) {
