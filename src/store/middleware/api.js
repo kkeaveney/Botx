@@ -1,21 +1,20 @@
 import axios from "axios";
 import * as actions from "../api";
 
-const api = ({ dispatch }) => (next) => async (action) => {
+const apiMiddleware = ({ dispatch }) => (next) => async (action) => {
   if (action.type !== actions.apiCallBegan.type) return next(action);
   next(action);
-  const { url, method, data, onSuccess, onError } = action.payload;
+  const { url, onSuccess, onError } = action.payload;
 
   try {
     const response = await axios.request({
-      baseURL: "http://localhost:9001/api",
+      baseURL: "https://api.0x.org/sra/v3",
       url,
-      method,
-      data,
     });
     // General
     dispatch(actions.apiCallSuccess(response.data));
     // Specefic
+
     if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
   } catch (error) {
     // General
@@ -25,4 +24,4 @@ const api = ({ dispatch }) => (next) => async (action) => {
   }
 };
 
-export default api;
+export default apiMiddleware;

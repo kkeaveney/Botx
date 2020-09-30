@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { get } from "lodash";
-import moment from "moment";
 
 export const apiSlice = createSlice({
   name: "api",
@@ -17,10 +16,10 @@ export const apiSlice = createSlice({
   },
 });
 
-export const { apiLoaded } = apiSlice.actions;
+export const { apiReceived } = apiSlice.actions;
 export default apiSlice.reducer;
 
 // Selectors
 
 const api = (state) => get(state, "api.data");
-export const apiSelector = createSelector(api, (w) => w);
+export const apiSelector = createSelector(api, (a) => a.records);

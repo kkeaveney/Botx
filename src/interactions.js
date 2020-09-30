@@ -8,17 +8,27 @@ import {
   providerLoaded,
   currentProviderLoaded,
 } from "./actions/web3Slice";
+import { apiReceived } from "./actions/apiSlice";
 import { getAccount } from "./helpers";
 import { apiCallBegan } from "./store/api";
+import { url } from "./config";
 
 /// API Interactions ////////////
 export const loadApi = (dispatch) => {
   dispatch(
     apiCallBegan({
-      url: "/bugs",
-      onSuccess: "api/apiReceived",
+      url: url,
+      onSuccess: apiReceived.type,
     })
   );
+  setInterval(function() {
+    dispatch(
+      apiCallBegan({
+        url: url,
+        onSuccess: apiReceived.type,
+      })
+    );
+  }, 10000);
 };
 
 ////// Web3 Interactions /////////
